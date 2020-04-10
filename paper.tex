@@ -4,12 +4,7 @@
 \usepackage{polyglossia}
 \usepackage{graphicx}
 \usepackage{hyperref}
-\hypersetup{
-    colorlinks=true,
-    linkcolor=blue,
-    filecolor=magenta,      
-    urlcolor=blue,
-}
+
 
 \setmainfont{FreeSerif}
 \setmainlanguage{english}
@@ -58,52 +53,10 @@ Nowadays, in linguistic and cognitive studies, to obtain data describing the pro
 Our approach is based on the specific Russian corpus manually collected for the purposes of experiments with eye-tracking. The corpus was used for conducting a cloze test. This fact assumes that we have not only correct word for predicting left context of different length, but also probabilities for each predicted word, computed according to the result of cloze task experiment. The LM based on these answers we will call "human-like". So the uniqueness of the research is that we can compare artificial language models with the model which approximates real human expectations about the next word for given sequence.
 It is important to note that cloze tasks require a major time commitment and is financially expensive, therefore one of the goals of this study is to find out whether the actual human respondents can be replaced by an artificial language model trained on a big corpus.
 
-% TODO (@SEMEN SOROKIN) объединить с интродакшн, мб как-то связать или убрать вообще, т.к. абзац незаконченный.
-\section{Background}
-
-% TODO: more background required; let's include our reviews from the
-% bibliography N. Lopukhina provided us?
-
-As Kuperberg and Jaeger claim in their “What do we mean by prediction
-in language comprehension?” \cite{kuperberg-jaeger}, the reaction time is in direct ratio with the predictability of the word: the more predictable the word is the faster is the reaction time. Moreover, predictability of a word or a context
-% TODO [f]
-  defines
-% TODO [g]
- fixation time in eye-movement studies as a result of language comprehension process. This implies that language comprehension must
-% TODO [h]
- be predictive. The authors also state that as the previous context expands, the predictability of the next word increases leading to - in cloze tests - higher accuracy of predicting the next work, and - in eye-movement experiments - to shorter fixation duration
-% TODO [i]
-. 
-
-\section{Related works}
-% TODO (@Anastasia Nikiorova) Add article reviews for related works
-
-There are several scientific papers that propose different algorithms for cloze answer generation. In \cite{zhou-cloze} the authors state the importance of next word prediction in language modelling and its potential contribution to OCR and hand writing recognition. The authors enhance existing models with ELMo and BERT language models and train on the CLOTH dataset of cloze tests. Expectedly, BERT models show the highest performance (0.86 and 0.83 accuracy scores on test dataset for BERT Large and BERT Base respectively), as this model was initially trained to recover masked tokens in text. At the same time, ELMo model's poor performance could be due to the lack of parameter tuning and the fact that ELMo was trained for next sequence word prediction.
-An LSTM-based model for cloze-style machine comprehension is proposed in \cite{wang-cloze}. The model consists of document hierarchical structure and dynamic attention mechanism for building the representations between the document and the question.
-
-
-\section{Methodology}
-
-\subsection{Cloze Probabilities}
-
-% TODO begin by defining a cloze task.
-Cloze task described in Taylor (1953) is an experiment in which one or more words are removed from a sentence and the participants are asked to fill in the missing content. 
-We used the dataset with cloze task answers from the study
-\cite{laurinavichyute}. This dataset is based on 144 sentences
-randomly selected from the Russian National Corpus (RNC,
- ruscorpora.ru) - an online corpus of Russian texts with extensive
-search options. These sentences were slightly edited: the authors
-replaced rare infrequent words with more frequent ones and shortened
-the sentences when they exceeded the preset maximum length of 13
-words. The stimuli sentences were subjected to the cloze task
-experiment. Cloze task \cite{taylor:1953} is a test, commonly carried out
-for assessing native speakers of a language, which is aimed to
-understand respondents’ comprehension of a language and their ability
-to predict missing portions of written texts \cite{laurinavichyute}. This experiment presumes that native speakers are able to understand context and vocabulary in order to identify the correct semantic field or part of speech of a missing word.
-% TODO [j]
- In \cite{laurinavichyute}, the respondents were asked to successively predict next words for each context. An example of stimuli that were shown to the participants is presented in the table below with corresponding correct next words and calculated predictability scores.
 
 \begin{table*}
+\caption{Example of stimuli sentence from RNC in cloze task with probabilities of the next word. Sentence: "А промывать манную крупу перед тем, как варить ее, не пробовали?" (English translation: "Have you tried to rinse semolina before boiling it?")
+\newline}
 \centering
 \begin{tabular}{llr}
 
@@ -142,14 +95,42 @@ to predict missing portions of written texts \cite{laurinavichyute}. This experi
 \end{tabular}
 \end{table*}
 
+\section{Related works}
+
+As Kuperberg and Jaeger claim in their “What do we mean by prediction
+in language comprehension?” \cite{kuperberg-jaeger}, the reaction time is in direct ratio with the predictability of the word: the more predictable the word is the faster is the reaction time. Moreover, predictability of a word or a context defines fixation time in eye-movement studies as a result of language comprehension process. This implies that language comprehension must be predictive. The authors also state that as the previous context expands, the predictability of the next word increases leading to - in cloze tests - higher accuracy of predicting the next work, and - in eye-movement experiments - to shorter fixation duration. 
+
+There are several scientific papers that propose different algorithms for cloze answer generation. In \cite{zhou-cloze} the authors state the importance of next word prediction in language modelling and its potential contribution to OCR and hand writing recognition. The authors enhance existing models with ELMo and BERT language models and train on the CLOTH dataset of cloze tests. Expectedly, BERT models show the highest performance (0.86 and 0.83 accuracy scores on test dataset for BERT Large and BERT Base respectively), as this model was initially trained to recover masked tokens in text. At the same time, ELMo model's poor performance could be due to the lack of parameter tuning and the fact that ELMo was trained for next sequence word prediction.
+
+An LSTM-based model for cloze-style machine comprehension is proposed in \cite{wang-cloze}. The model consists of document hierarchical structure and dynamic attention mechanism for building the representations between the document and the question. Despite the two-layer LSTM model with attention outperforms one-layer model, the final best accuracy score is still only 0.76 which could be improved by future modifications to the model.
+
+
+\section{Methodology}
+
+\subsection{Cloze Probabilities}
+
+Cloze task described in Taylor (1953) is an experiment in which one or more words are removed from a sentence and the participants are asked to fill in the missing content. 
+We used the dataset with cloze task answers from the study
+\cite{laurinavichyute}. This dataset is based on 144 sentences
+randomly selected from the Russian National Corpus (RNC,
+ ruscorpora.ru) - an online corpus of Russian texts with extensive
+search options. These sentences were slightly edited: the authors
+replaced rare infrequent words with more frequent ones and shortened
+the sentences when they exceeded the preset maximum length of 13
+words. The stimuli sentences were subjected to the cloze task
+experiment. Cloze task \cite{taylor:1953} is a test, commonly carried out
+for assessing native speakers of a language, which is aimed to
+understand respondents’ comprehension of a language and their ability
+to predict missing portions of written texts \cite{laurinavichyute}. This experiment presumes that native speakers are able to understand context and vocabulary in order to identify the correct semantic field or part of speech of a missing word.
+
+In \cite{laurinavichyute}, the respondents were asked to successively predict next words for each context. An example of stimuli that were shown to the participants is presented in Table 1 with corresponding correct next words and calculated predictability scores.
+
 
 Each context received from ~10 to ~100 responses, not all of which matched the correct word. The predictability of each next word was computed as the number of correctly predicted words divided by the total number of predicted words. The Laurinavichyute et al. article and the full list of sentences used in the study can be found. 
 
 \subsection{Corpus-based probabilities}
 
 For computing сorpus-based probabilities, different model types and training corpora were selected. The goal of these combinations is to represent some dependencies (if they exist) between model architecture,  vocabulary and to compare results.
-
-% TODO [k]
 
 % TODO: improve explanation of the description of "language model"
 
@@ -164,42 +145,58 @@ In this case, we are using bi- and tri-grams HMM not for PoS-tagging but for pre
 
 \head{LSTM}
 
-A one-layer long short-term memory (LSTM) recurrent neural network model was used
-\cite{jozefowicz:2016}
-%[Jozefowicz, Vinyals, Schuster, Shazeer, Wu, 2016]
-to create a list of predictions for each word in the same 144 stimuli sentences. The dimensions of the model are 2048 for hidden layer and 512 for the input and output layers. 
+A one-layer long short-term memory (LSTM) recurrent neural network model was used \cite{jozefowicz:2016} to create a list of predictions for each word in the same 144 stimuli sentences. The dimensions of the model are 2048 for hidden layer and 512 for the input and output layers. 
 
 \head{BERT}
 
 Bidirectional Encoder Representations from Transformers
 (BERT) \cite{bert} is trained on a masked language modeling objective. Unlike a traditional language modeling objective of predicting the next word in a sequence given the history, masked language modeling predicts a word given its left and right context. Because the model expects context from both directions, it is not obvious how BERT can be used as a traditional language model (i.e. to evaluate the probability of a text sequence) or how to sample from it. We test several ideas: give the model all of content, except masked word, and using the technique[] to rework BERT as classical language model.
-% TODO [l]
-
 
 For experiments we will using BERT trained on Russian Wiki corpus
 \cite{ruwiki}. To show differences  between models, we will fine-tune BERT with our corpuses.
-% TODO [m]
-
-% TODO [n]
 
 
 \subsection{Corpora}
 
-% TODO: citation for russian news corpus
 Russian news corpus \cite{runews} includes newspaper articles published in the 2000s: newspaper different types of articles.
-% TODO [p]
- 
-
-% TODO: citation for natcorp
-National corpus of Russian language \cite{natcorp} include written texts from the middle of the 18th to the middle of the 20th centuries
-% TODO [q]
-.
+National corpus of Russian language \cite{natcorp} include written texts from the middle of the 18th to the middle of the 20th centuries.
 
 Some corpus characteristics presented below:
 
+All of our models (except LSTM) was trained separately on 2 corpora and  their combination. Thus we examine these models:
+
+\begin{itemize}
+	\item Hidden Markov Models
+	\begin{itemize}
+		\item Bigram HMM on RNC
+		\item Bigram HMM on NCRL
+		\item Trigram HMM on RNC
+		\item Trigram HMM on NCRL
+	\end{itemize}
+	\item BERT-based models
+
+	\begin{itemize}
+		\item no fine-tuning
+		\item BERT fine-tuned on RNC
+		\item BERT fine-tuned on NCRL
+		\item BERT fine-tuned on both
+	\end{itemize}
+
+	\item custom LSTM model
+	\item hybrid model
+	\begin{itemize}
+		\item Bigram HMM on NCRL + BERT fine-tuned on NCRL
+	\end{itemize}
+\end{itemize}
+
+LSTM was trained on the part of RNC, excluding the sentences chosen for stimuli, namely on modern written texts from the 1950s to the present day, real-life Russian oral speech recordings from the same period. In addition, it was trained on RNC and NCRL. Overall, the training corpus consisted of 577 million tokens. The model was tested on 1000 sentences from the OpenCorpora 
+\cite{bocharov:2011} with overall 1,9 million of tokens from newspaper articles, Russian Wikipedia, texts from blogs, fiction, non-fiction, and legal documents. 
+
+Among all, there is a Bigram HMM on NCRL + BERT fine-tuned on NCRL model, which is by structure a combination of a bigram HMM and a BERT model. These models were joined based on the best performance of both models: probability distributions of HMM are used for contexts with length less than 6 tokens, and BERT is used for longer contexts. 
+
 \begin{table}
-\caption{Corpus statistics. RNC is the Russian News Corpus, and NCRL
-is the National Corpus of the Russian Language.}
+\caption{Corpus statistics. RNC is the Russian News Corpus, and NCRL is the National Corpus of the Russian Language.
+\newline}
 \centering
 
 \begin{tabular}{llrr}
@@ -223,73 +220,24 @@ NCRL &
 \end{tabular}
 \end{table}
 
-All of our models (except LSTM) was trained separately on 2 corpora and  their combination. Thus we examine these models:
 
-\begin{itemize}
-	\item Hidden Markov Models
-	\begin{itemize}
-		\item Bigram HMM on RNC
-		\item Bigram HMM on NCRL
-		\item Trigram HMM on RNC
-		\item Trigram HMM on NCRL
-	\end{itemize}
-	\item BERT-based models
-% TODO [r]
-	\begin{itemize}
-		\item no fine-tuning
-		\item BERT fine-tuned on RNC
-		\item BERT fine-tuned on NCRL
-		\item BERT fine-tuned on both
-	\end{itemize}
-	% TODO decide whether the word "custom" is appropriate here;
-	% I think BERT also uses LSTMs, so probably this is just "an
-	% LSTM model of our own design"?
-	\item custom LSTM model
-% TODO [s]
-	\item hybrid model
-	\begin{itemize}
-		\item Bigram HMM on NCRL + BERT fine-tuned on NCRL
-	\end{itemize}
-\end{itemize}
-
-LSTM was trained on the part of RNC
-% TODO [t]
-, excluding the sentences chosen for stimuli, namely on modern written texts from the 1950s to the present day, real-life Russian oral speech recordings from the same period. In addition
-% TODO [u]
-, it was trained on RNC and NCRL. Overall, the training corpus consisted of 577 million tokens. The model was tested on 1000 sentences from the OpenCorpora 
-\cite{bocharov:2011}
-% [http://opencorpora.org/; Bocharov
-% TODO [v]
-% et al. 2011]
-with overall 1,9 million of tokens from newspaper articles, Russian Wikipedia, texts from blogs, fiction, non-fiction, and legal documents. 
-
-Among all, there is a Bigram HMM on NCRL + BERT fine-tuned on NCRL model, which is by structure a combination of a bigram HMM and a BERT model. These models were joined based on the best performance of both models: probability distributions of HMM are used for contexts with length less than 6 tokens, and BERT is used for longer contexts. 
-
-Renormalization of probabilities
+\head{Renormalization of probabilities}
 
 To evaluate each model’s predictions, we took the first 30 most probable words. Each probability was renormalized by dividing originally computed word-wise probability by the sum of probabilities of the first 30 words. This way the sum of probabilities the selected words would equal 1.
 
 \subsection{Overview of used metrics}
 
-        
-
 \head{Mean accuracy}
 
 The metric is used to compute the mean of correct word prediction across all contexts.  Range of values from 0 to 1. It was computed as a mean value of the array of accuracies.
 
-% TODO [w]
-
 \head{Absolute number of correct word predictions}
 
-The metric represents the amount of contexts for each prediction of the correct word is non-zero.    
-% TODO [x]
-
+The metric represents the amount of contexts for each prediction of the correct word is non-zero. 
 
 \head{Context consistency}
 
 The metric represents the proportion of “context consistency”. It can be interpreted as the answer to the next question: “How many contexts coincide assuming that prediction of the correct word (for each of them) is not equal to zero for a certain model pair?
-
-% TODO [y]
 
 \head{Kolmogorov-Smirnov test}
 
@@ -297,10 +245,7 @@ In our study, we used two-sample Kolmogorov-Smirnov test to find out whether two
 
 The Kolmogorov–Smirnov statistic is 
 
-
-
 \[ {D_{n,m}=\sup _{x}|F_{1,n}(x)-F_{2,m}(x)|,} \]
-% TODO [z]
 
 
 where \({F_{1,n}}\) and  \({F_{2,m}}\) are the empirical distribution
@@ -308,7 +253,6 @@ functions of the first and the second sample respectively, and
 \({\sup}\)
 is the supremum function. The null hypothesis is rejected at level
 \({\alpha }\) if 
-
 
 \[ {D_{n,m}>c(\alpha ){\sqrt {\frac {n+m}{nm}}},} \]
 
@@ -319,89 +263,15 @@ where {n} and {m} are the sizes of first and second sample respectively, and wh
 
 The advantage of Kolmogorov-Smirnov test is that, unlike t-test, it can catch the difference between Gaussian distributions with similar means but different variances.
 
-This metric was used to compare both lexical and word class
-% TODO [aa]
- probability distributions of cloze task, LSTM, HMM models pairwise. The results of the metric are listed in the Results section of this article.
+This metric was used to compare both lexical and word class probability distributions of cloze task, LSTM, HMM models pairwise. The results of the metric are listed in the Results section of this article.
 
+\head{Kullback–Leibler divergence}
 
-\head{Kullback–Leibler divergence} % Sergey
+Cross-entropy loss, or log loss, measures the performance of a classification model whose output is a probability value between 0 and 1. Cross-entropy loss increases as the predicted probability diverges from the actual label. The cross-entropy shows the difference between probability distributions p and q. Kullback and Leibler defined a similar measure now known as KL divergence. This measure quantifies how similar a probability distribution p is to a candidate distribution q. We used KL-divergence to compare several language model.
 
-Cross-entropy loss, or log loss, measures the performance of a classification
-% TODO [ab]
- model whose output is a probability value between 0 and 1. Cross-entropy loss increases as the predicted probability diverges from the actual label. The cross-entropy shows the difference between probability distributions p and q. Kullback and Leibler defined a similar measure now known as KL divergence. This measure quantifies how similar a probability distribution p is to a candidate distribution q. We used KL-divergence to compare several
-% TODO [ac]
- language model.
+\head{Cosine similarity}
 
-\subsection{PoS} % [ad][ae]  probabilities Daria
-
-Word
-% TODO [af]
- class probabilities were computed as follows: each word in the model’s
-% TODO [ag]
- vocabulary (\(N = 500000\) most frequent words in the training corpus) and each word in the stimuli sentences was tagged for word class and morphological features using PyMorphy2 analyser 
-\cite{korobov:2015}
-%[Korobov
-% TODO [ah]
-%, 2015]
-and the predictions of the model were compared to the
-annotation of the target words. A word class match was coded if the
-predicted and target word belonged to the same word class. The
-probability of a word class was computed by summing probabilities of
-all words in the model’s vocabulary which had the morphosyntactic
-feature in question. For example, to estimate the word class
-probability in a sentence “A mobile \underline{\hspace{1em}}”, where "phone" is the target word, we would sum up probabilities of all nouns in the model’s vocabulary. For morphologically ambiguous words (e.g., рот ‘mouth’ in nominative or accusative singular), all possible variants were considered in the probability estimation.
-
-\subsection{Probabilities for OBJECT-VERB-FUNCTIONAL-MODIFIER} % Daria
-
-We have also tried to use different tags for our part-of-speech tagging. Instead of using all of the tags, we thought we could use a more generalized set of object, verb, modifier and functional word, because when a person mentally chooses the next word, they might not think in terms of the usual parts of speech, but choose generally an object, or a description of an object, or a verb, or just some functional word.
-
-Firstly, we converted all of the modified Pymorphy tags into 4 general sets: 'ADJ', 'ADVB', 'NUMR' were generalized to 'MOD'; 'INFN' and 'PRED' - to 'VERB'; 'NPRO' to 'NOUN'; 'PREP', 'PRCL', 'CONJ' and 'INTJ' to 'FUNC' for each context. Then, we have counted probabilities of these tags in the same manner as the usual parts of speech
-% TODO [ai]
-. 
-
-We noticed that the generalized probabilities were overall higher than with modified Pymorphy tags.
-
-\subsection{Semantic comparison} % Daria
-
-After lots of trial and error
-% TODO [aj]
-, it was decided to use semantic vectors for the comparison of cloze task with other models in the semantic aspect
-% TODO [ak]
-. All words were mapped into a vector space of the model pre-trained on Wikipedia texts
-% TODO [al]
- \cite{arefyev}. The comparison itself needed to be dynamic, because for each context a different amount of words should have been chosen.
-
-To compare semantic vectors for each context, firstly, we cleared all of the words so there would be no digits, meaningless letters and punctuation. Then, we have built a function
-% TODO [am]
-, which:
-
-1)        Extracts first 10 words (we have decided that that is the maximum amount of words for each context that would have meaningful probabilities as all of the words after the first ten for each model have their probabilities tends to zero) for each of 1219 contexts
-% TODO [an]
-;
-
-% TODO arithmetic should be TeX-ified
-2)        Counts the quotient of the sum of words’ probabilities and each amount of words (for example, if two words were to have probabilities 0.5 and 0.1, we would count (0.5+0.1)/2), which we call mean probabilities);
-
-3)        Counts the difference between the probabilities of the first and last word
-% TODO [ao]
- and then difference between mean probabilities of the previous word and the next one
-% TODO [ap]
-;
-
-4)        Decides what amount of words vectors to use for each context based on how different the first-last word difference and the mean probability difference is – if the latter is lesser than the former, the function checks the next difference, if not – the previous amount of words would be used for semantic comparison.
-
-After the decision on the amount of words was made, with the help of gensim in Python a vector for each word was extracted.
-
-Then, MiniBatchKmeans (a modified version of the K-means algorithm,
-that uses mini-batches to reduce computation time, while at the same
-time trying to optimize the same goal function \cite{bejar}) algorithm in sklearn was used to find “cluster centers”, or mean semantic vector for one model for each context
-% TODO [aq]
-.
-%And at last, we found cosine similarity (also with sklearn library) for each pair of semantic vectors for each pair of models.
-
-%\subsection{Cosine similarity}
-%
-%Cosine similarity was used to measure closeness of semantic vectors of predicted words between different models.
+Cosine similarity was used to measure closeness of semantic vectors of predicted words between different models. It is widely used for calculating distance between two words. In our study, cosine similarity was used to find semantic probability of predicting the word which is semantically close to the target word. 
 %
 %Cosine similarity is a measure of similarity between two non-zero vectors that measures the cosine of the angle between them. Given two vectors of attributes, A and B, the cosine similarity, cos(θ), is calculated as
 %
@@ -413,13 +283,44 @@ time trying to optimize the same goal function \cite{bejar}) algorithm in sklear
 %_{i=1}^{n}{B_{i}^{2}}}}}},}  \]
 %
 %where \({A_{i}}\) and \({B_{i}}\) are components of vector {A} and {B} respectively.
-%
-%The cosine similarity is widely used for calculating distance between two words. In our study, cosine similarity was used to find semantic probability of predicting the word which is semantically close to the target word. 
+
+\subsection{PoS}
+
+Word class probabilities were computed as follows: each word in the model’s vocabulary (\(N = 500000\) most frequent words in the training corpus) and each word in the stimuli sentences was tagged for word class and morphological features using PyMorphy2 analyser 
+\cite{korobov:2015} and the predictions of the model were compared to the annotation of the target words. A word class match was coded if the predicted and target word belonged to the same word class. The probability of a word class was computed by summing probabilities of all words in the model’s vocabulary which had the morphosyntactic feature in question. For example, to estimate the word class probability in a sentence “A mobile \underline{\hspace{1em}}”, where "phone" is the target word, we would sum up probabilities of all nouns in the model’s vocabulary. For morphologically ambiguous words (e.g., рот ‘mouth’ in nominative or accusative singular), all possible variants were considered in the probability estimation.
+
+\subsection{Probabilities for OBJECT-VERB-FUNCTIONAL-MODIFIER}
+
+We have also tried to use different tags for our part-of-speech tagging. Instead of using all of the tags, we thought we could use a more generalized set of object, verb, modifier and functional word, because when a person mentally chooses the next word, they might not think in terms of the usual parts of speech, but choose generally an object, or a description of an object, or a verb, or just some functional word.
+
+Firstly, we converted all of the modified Pymorphy tags into 4 general sets: 'ADJ', 'ADVB', 'NUMR' were generalized to 'MOD'; 'INFN' and 'PRED' - to 'VERB'; 'NPRO' to 'NOUN'; 'PREP', 'PRCL', 'CONJ' and 'INTJ' to 'FUNC' for each context. Then, we have counted probabilities of these tags in the same manner as the usual parts of speech. 
+
+We noticed that the generalized probabilities were overall higher than with modified Pymorphy tags.
+
+\subsection{Semantic comparison}
+
+After lots of trial and error, it was decided to use semantic vectors for the comparison of cloze task with other models in the semantic aspect. All words were mapped into a vector space of the model pre-trained on Wikipedia texts \cite{arefyev}. The comparison itself needed to be dynamic, because for each context a different amount of words should have been chosen.
+
+To compare semantic vectors for each context, firstly, we cleared all of the words so there would be no digits, meaningless letters and punctuation. Then, we have built a function, which:
+
+1)        Extracts first 10 words (we have decided that that is the maximum amount of words for each context that would have meaningful probabilities as all of the words after the first ten for each model have their probabilities tends to zero) for each of 1219 contexts;
+
+% TODO arithmetic should be TeX-ified
+2)        Counts the quotient of the sum of words’ probabilities and each amount of words (for example, if two words were to have probabilities 0.5 and 0.1, we would count (0.5+0.1)/2), which we call mean probabilities);
+
+3)        Counts the difference between the probabilities of the first and last word and then difference between mean probabilities of the previous word and the next one;
+
+4)        Decides what amount of words vectors to use for each context based on how different the first-last word difference and the mean probability difference is – if the latter is lesser than the former, the function checks the next difference, if not – the previous amount of words would be used for semantic comparison.
+
+After the decision on the amount of words was made, with the help of gensim in Python a vector for each word was extracted.
+
+Then, MiniBatchKmeans (a modified version of the K-means algorithm,
+that uses mini-batches to reduce computation time, while at the same
+time trying to optimize the same goal function \cite{bejar}) algorithm in sklearn was used to find “cluster centers”, or mean semantic vector for one model for each context. And at last, we found cosine similarity (also with sklearn library) for each pair of semantic vectors for each pair of models.
 
 \section{Results}
 
-\subsection{Quantitative and qualitative analysis of cloze task
-language model} %  Semen
+\subsection{Quantitative and qualitative analysis of cloze task language model} %  Semen
 
 First of all, it is necessary to establish how many different answers on average are available for each context in a language model based on a cloze task, since it is necessary to determine how many of the most likely words will be explored in artificial language models and test the hypothesis about the dependence of predictability on the length of the context.
 
@@ -429,12 +330,10 @@ Mean quantity of predictions for the language model built on cloze-task results 
 \centering
 \includegraphics[width=0.4\textwidth]{figures/pdf/num-fill-context-dist.pdf}
 \end{figure}
-% TODO [ar]
 
 \begin{table*}
 \label{tbl:min-var}
-\caption{Contexts in which minimum variance is observed in filling by
-one lexical unit.}
+\caption{Contexts in which minimum variance is observed in filling by one lexical unit.}
 \centering
 
 \vspace{0.5em}
@@ -457,15 +356,10 @@ one lexical unit.}
 \end{tabular}
 \end{table*}
 
-In Table~\ref{tbl:min-var}, contexts with minimum variance in filling
-are listed. It is worth emphasizing that in all the above cases there
-was no variance in respondents’ answers, i.e. all respondents gave the
-same one answer for these contexts. What is more, this predicted word
-was the original word from the corpus.
+In Table 3, contexts with minimum variance in filling
+are listed. It is worth emphasizing that in all the above cases there was no variance in respondents’ answers, i.e. all respondents gave the same one answer for these contexts. What is more, this predicted word was the original word from the corpus.
 
-We classified these contexts based on their constraining ability
-% TODO [as]
- and found out the following groups of com:
+We classified these contexts based on their constraining ability and found out the following groups of com:
 
 Semantically constraining contexts [contexts \#3, 4, 6, 7, 8, 9]
 
@@ -477,27 +371,15 @@ The maximum number of different answers were received for the “на болот
 
 In this regard, the study of the artificial language model distribution is meaningless, as it will always be uniform, so as to say, the indicator for each context in similar histograms will be equal to the size of the vocabulary.
 
-\begin{figure}
-\caption{Context length vs. lexical accuracy.}
-\centering
 
-\includegraphics[width=0.4\textwidth]{figures/pdf/context-accuracy-lexical.pdf}
-
-\end{figure}
 
 Another important aspect in the study of the linguistic model of the cloze task is the relationship between the length of the context and the probability of predicting (=predictability of) the correct word.
 
-In Figure~\ref{fig:context-accuracy-regression} reflects a high value of predictability for contexts of length both less and more than five lexical units. However, the lack of correlation is worth emphasizing. We received Pearson correlation coefficient score of 0.323 and Spearman correlation coefficient of 0.363.
+Regression line reflects a high value of predictability for contexts of length both less and more than five lexical units. However, the lack of correlation is worth emphasizing. We received Pearson correlation coefficient score of 0.323 and Spearman correlation coefficient of 0.363.
 
-According to the results of our experiment, the closest probability distribution of the correct word of all the models was achieved with BERT trained on the literary
-% TODO [at]
- corpus.
+According to the results of our experiment, the closest probability distribution of the correct word of all the models was achieved with BERT trained on the literary corpus.
 
-In this case
-% TODO [au]
-, there is practically no correlation
-% TODO [av]
-: Pearson correlation score is 0.093521, Spearman correlation - 0.079094.
+In this case, there is practically no correlation: Pearson correlation score is 0.093521, Spearman correlation - 0.079094.
 
 \begin{figure}
 \label{fig:context-accuracy-regression}
@@ -505,21 +387,20 @@ In this case
 \includegraphics[width=0.4\textwidth]{figures/pdf/context-accuracy-regression.pdf}
 \end{figure}
 
-% TODO [aw]
-
 
 Each model was evaluated by two measures: mean accuracy of model predictions and absolute number of correct word predictions. For computing mean accuracy, the mean of correct answer probabilities was taken. In case of absolute number of correct word predictions, a model achieved +1 score if there was at least one correct answer among all predictions.
-% TODO [ax]
 
+\begin{figure}
+\centering
+\includegraphics[width=0.4\textwidth]{figures/pdf/context-accuracy-lexical.pdf}
+\caption{Context length vs. lexical accuracy.}
+\end{figure}
 
 \subsection{Model comparison on the Lexical Level}
 
 \head{Mean Accuracy}
 
-Figure~\ref{fig:mean-accuracy-hist-lex}
-% TODO [ay]
-% TODO [az]
- below shows a bar chart of the mean accuracy scores of each model on
+Figure~\ref{fig:mean-accuracy-hist-lex} below shows a bar chart of the mean accuracy scores of each model on
 the lexical level. As the goal of our study was to build an algorithm,
 which would be the closest approximation of the cloze task results
 (18\% accuracy), we can see that BERT (not a language model one) model
@@ -533,9 +414,7 @@ architectures showed low results on the lexical level.
 \includegraphics[width=0.4\textwidth]{figures/pdf/mean-accuracy-hist-lex.pdf}
 \end{figure}
 
-It is noticeable that BERT mean accuracy results are higher than cloze task score. This can be explained by the fact that the model was trained on a large amount of written texts and thus had a higher chance to guess the correct word. Following this assumption, an assumption can be made that respondents’ active vocabulary size is lower than model’s vocabulary. Also, we can make a hypothesis that the process of word retrieval by humans and by the model is performed differently, as respondents do not always respond with the most probable answer
-% TODO [ba]
-.
+It is noticeable that BERT mean accuracy results are higher than cloze task score. This can be explained by the fact that the model was trained on a large amount of written texts and thus had a higher chance to guess the correct word. Following this assumption, an assumption can be made that respondents’ active vocabulary size is lower than model’s vocabulary. Also, we can make a hypothesis that the process of word retrieval by humans and by the model is performed differently, as respondents do not always respond with the most probable answer.
 
 \head{Absolute Accuracy}
 
@@ -567,25 +446,25 @@ with BERT (58\% of overlap) and BERT trained on RNC.
 
 \head{Kolmogorov-Smirnov}
 
-At the next step, we performed Kolmogorov-Smirnov testing to find the similarity in the probability distributions of the model predictions. This table also reflects the sum value of pairwise comparison of the contexts using Kolmogorov-Smirnov testing. For convenience all the values were normalized. Observations show that the closest probability distribution is seen in LSTM model. However, as we see, there is a variation in metric values from 0.9 to 6.2 for different models. Thus, we can assert that the difference between all models and a cloze task is rather large and in some way unacceptable.
-% TODO [bb]
+At the next step, we performed Kolmogorov-Smirnov testing to find the similarity in the probability distributions of the model predictions. Figure 5 also reflects the sum value of pairwise comparison of the contexts using Kolmogorov-Smirnov testing. For convenience all the values were normalized. Observations show that the closest probability distribution is seen in LSTM model. However, as we see, there is a variation in metric values from 0.9 to 6.2 for different models. Thus, we can assert that the difference between all models and a cloze task is rather large and in some way unacceptable.
+
+\begin{figure}
+\caption{Kolmogorov-Smirnov tests, lexical level.}
+\label{fig:ks-lexical}
+\centering
+\includegraphics[width=0.5\textwidth]{figures/pdf/ks-lexical.pdf}
+\end{figure}
+
+\head{Cosine Similarity}
+To measure model predictions on semantic level, the cosine similarity between each context’s predicted words centroid vector was found. The number of words was selected dynamically for each context by maximizing vector significance with the minimum words.
 
 
 
+\head{Kullback–Leibler divergence}
 
-%\head{Cosine Similarity}
-%To measure model predictions on semantic level, the cosine similarity between each context’s predicted words centroid vector was found. The number of words was selected dynamically for each context by maximizing vector significance with the minimum words.
-%
+Due to the fact that all of our models are word-level, and in order to lower the casing variability we've combined all our vocabularies into one. For this compound vocabulary we calculated the KL divergence of our models.
 
-% TODO [bc]
-
-\head{Kullback–Leibler divergence} % Sergey
-
-Due to the fact that all of our models are word-level, and in order to lower the casing variability we've combined all our vocabularies into one
-% TODO [bd]
-. For this compound vocabulary we calculated the KL divergence of our models.
-
-The table below shows the scores for three different models with
+Table 3 shows the scores for three different models with
 bigram HMM trained on NCRL showing the best results. Unfortunately,
 this heat map does not show us changes in LM \{language model?\} distances context-lengthwise. Table of top-3 of lengthwise LM distances.
 
@@ -594,7 +473,8 @@ this heat map does not show us changes in LM \{language model?\} distances conte
 
 \caption{KL scores for three different models, all trained on the
 National Corpus of the Russian Language. ``Context provided'' is in number
-of tokens.}
+of tokens.
+\newline}
 
 \begin{tabular}{rrrr}
 \textbf{Context} &
@@ -656,17 +536,11 @@ KL(Cloze || BERT) = 1.93
 KL(Cloze || LSTM) = 1.84
 KL(Cloze || HMM + BERT) = 1.71
 
-\subsection{Model comparison on the PoS level} % Semen, Anastasia
+\subsection{Model comparison on the PoS level}
 
 \head{Mean Accuracy}
 
-The performance of all models, except for LSTM
-% TODO [be]
-
-% TODO [bf]
-
-% TODO [bg]
-, at the parts of speech level has significantly and proportionally increased. This is due to a decrease in the set of classes for which classification occurs. At this stage, the first 30 words of each model were tagged for parts of speech. Overall, there were 16 word classes. It is notable that BERT linguistic models have the highest scores.
+The performance of all models, except for LSTM, at the parts of speech level has significantly and proportionally increased. This is due to a decrease in the set of classes for which classification occurs. At this stage, the first 30 words of each model were tagged for parts of speech. Overall, there were 16 word classes. It is notable that BERT linguistic models have the highest scores.
 
 \begin{figure}
 \caption{Mean accuracy histogram, part-of-speech level.}
@@ -674,8 +548,6 @@ The performance of all models, except for LSTM
 \centering
 \includegraphics[width=0.4\textwidth]{figures/pdf/mean-accuracy-hist-pos.pdf}
 \end{figure}
-
-
 
 \head{Absolute Accuracy}
 
@@ -701,13 +573,11 @@ The consistency of a part of speech prediction differs significantly from the le
 \end{figure}
 
 
-\subsection{Model comparison on the OMVF level} %  Semen, Daria
+\subsection{Model comparison on the OMVF level}
 
 \head{Mean Accuracy}
 
-Reducing the number of classes by 4 times does not lead to an improvement in the average accuracy
-% TODO [bh]
-. Although we can see that the models perform similar as on the original parts of speech model.
+Reducing the number of classes by 4 times does not lead to an improvement in the average accuracy. Although we can see that the models perform similar as on the original parts of speech model.
 
 \begin{figure}
 \caption{Mean accuracy histogram, object-verb-functional-modifier level.}
@@ -746,115 +616,19 @@ Figure~\ref{fig:heatmap-context-accord-ovfm}.
 \includegraphics[width=0.4\textwidth]{figures/pdf/heatmap-context-accord-ovfm.pdf}
 \end{figure}
 
-\head{Kolmogorov-Smirnov}%KS test (based on absolute value statistics)
+\head{Kolmogorov-Smirnov Test}
 
 The last two tests reflect a contradictory trend: LSTM shows a greater resemblance to the cloze task. Here it is necessary to make a comment about probabilistic distribution. Calculation of statistical tests based on probability distributions of the models makes the metrics far from objective, since the variation of the number of lexical units to consider significantly impacts the final output. Thus the results may highly differ for 25 and 30 lexical units. Moreover, artificial models allow us to reflect distributions for the large vocabulary, whereas the vocabulary of the cloze task is very limited and has many random outliers when the context is not constraining the next word on any level. It is disputable whether such cases should be eliminated from the vocabulary during research or not.                          
 
 \section{Conclusion}
-
-\section{Bibliography}% [bi] 
+One of the important results of this study is the development of a certain set of methods (tools) for comparing the generative properties of language models. The starting point is an unrestricted set of contexts and the probabilistic distribution of words for each of them. This data can be obtained from all kind of language models. In addition re-normalized value of frequency from corpus can also be used as a language model for these purposes in further research. From our point of view the most relevant metrics (from presented above) are Mean (Absolute) accuracy is prediction and Cosine similarity measure computed for each pairs of models.  We tested this methodology on the following models: cloze-test-based model, hidden Markov model (with the different n-grams), LSTM, BERT and see that the last one can predict the next word more accurate and LSTM - Cloze task pair shows that semantic directions of k-first words for given context are more similar. However based on all of these metrics scores we can conclude that cloze-test-based model cannot be replaced by any of presented artificial language models for the purposes of eye-tracking experiments and also it is worth noticeable that predictability scores computed on cloze test reflect real-world situation, but last question is beyond the scope of our study.
+\section{Bibliography}
 \bibliographystyle{lrec}
 \bibliography{paper}
 
 
 \end{document}
 
-% [a]no abstract
-% 
-% [b]it is very limited in the text
-% 
-% [c]it is not present in the text...
-% 
-% [d]task?
-% 
-% [e]not clear, how probability score is calculated
-% 
-% [f]??? can we measure predictability of a context?
-% 
-% [g]too strong
-% 
-% explains variance
-% 
-% [h]other papers show that it is not an oblagation
-% 
-% [i]incorrect implication
-% 
-% [j]does it?
-% 
-% [k]what is the rationale behind all these models?
-% 
-% Why did you choose them?
-% 
-% [l]not clear: how did you plan to retransform BERT?
-% 
-% [m]how this sentence is related to the previous one?
-% 
-% [n]Непонятно: в итоге BERT у вас видит контекст справа или нет?
-% 
-% [o]why did you select these particular corpora?
-% 
-% [p]link
-% 
-% [q]and what about later texts?
-% 
-% [r]what corpus it was trained on?
-% 
-% [s]trained on what?
-% 
-% [t]did you train your own lstm?
-% 
-% [u]why?
-% 
-% [v]add to the references
-% 
-% [w]how was it computed
-% 
-% [x]how was it computed
-% 
-% [y]how was it computed
-% 
-% [z]latex format for the final article
-% 
-% [aa]what is it? it was not introduced above
-% 
-% [ab]which of the models was a classification model? it was not explained above
-% 
-% [ac]unclear
-% 
-% [ad]what it the rationale to compute Pos probabilities?
-% 
-% [ae]PoS or word class? choose one nomination
-% 
-% [af]it is my text
-% 
-% [ag]did you do this for the cloze task responses?
-% 
-% [ah]references
-% 
-% [ai]did you do this for models' predictions or for cloze responses as well?
-% 
-% [aj]what did you try? can you list it?
-% 
-% [ak]what does it mean? what was the goal?
-% 
-% [al]why did you choose this model???
-% 
-% [am]какова идея за этой функцией? вы можете сначала объяснить, что вы в принципе хотели сделать?
-% 
-% [an]how did you get this number?
-% 
-% [ao]where? in the context?
-% 
-% [ap]in context?
-% 
-% [aq]for each context or for each word in context?
-% 
-% why did you measure semantic similarity of contexts?
-% 
-% [ar]number of guesses for each target word?
-% 
-% [as]More info on constraining contexts with reference to the original article
-% 
 % [at]which one?
 % 
 % [au]not clear
