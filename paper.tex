@@ -75,10 +75,12 @@ in language comprehension?” \cite{kuperberg-jaeger}, the reaction time is in d
 % TODO [i]
 . 
 
-\section{Related work}
+\section{Related works}
 % TODO (@Anastasia Nikiorova) Add article reviews for related works
 
-There are several scientific papers that propose different algorithms for cloze answer generation. In \cite{zhou-cloze} the authors state the importance of next word prediction in language modelling and its potential contribution to OCR and hand writing recognition. The authors enhance existing models with ELMo and BERT language models and train on the CLOTH dataset of cloze tests. Expectedly, BERT models show the highest performance (0.86 and 0.83 accuracy scores on test dataset for BERT Large and BERT Base consecutively), as this model was initially trained to recover masked tokens in text.
+There are several scientific papers that propose different algorithms for cloze answer generation. In \cite{zhou-cloze} the authors state the importance of next word prediction in language modelling and its potential contribution to OCR and hand writing recognition. The authors enhance existing models with ELMo and BERT language models and train on the CLOTH dataset of cloze tests. Expectedly, BERT models show the highest performance (0.86 and 0.83 accuracy scores on test dataset for BERT Large and BERT Base respectively), as this model was initially trained to recover masked tokens in text. At the same time, ELMo model's poor performance could be due to the lack of parameter tuning and the fact that ELMo was trained for next sequence word prediction.
+An LSTM-based model for cloze-style machine comprehension is proposed in \cite{wang-cloze}. The model consists of document hierarchical structure and dynamic attention mechanism for building the representations between the document and the question.
+
 
 \section{Methodology}
 
