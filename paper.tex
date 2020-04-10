@@ -33,10 +33,7 @@ Russian Federation}
 
 
 \begin{document}
-\hypersetup{allcolors = blue}
 \maketitleabstract
-
-% TODO: convert citations and references to bibtex
 \nocite{*}
 
 
@@ -51,7 +48,7 @@ Nowadays language models are the most powerful instrument to transfer knowledge.
 	\item Fit pre-trained LM as a part of more complex and specific model
 \end{itemize}
 It is important to note that the resulting model is very dependent on the quality of the based LM. So a possibility to compare models is also demanded and we propose a new comprehensive way to explore properties of different language models.
-Comparing LM is not a new topic. There is a lot of different tasks to measure their quality. It starts with the google analogy task for word2vec \cite{mikolov2013efficient} and now GLUE tasks\cite{wang2018glue} are used for these purposes. However, we want to check the generative ability of a different type of LM and compare them to each other.
+Comparing LM is not a new topic. There is a lot of different tasks to measure their quality. It starts with the google analogy task for word2vec \cite{mikolov2013efficient} and now GLUE tasks\cite{Wang2018GLUEAM} are used for these purposes. However, we want to check the generative ability of a different type of LM and compare them to each other.
 One of the the key terms in natural language understanding and speech generation is predictability. In cognitive linguistics, it implies a confidence degree of a language unit (word, part of speech, etc.) that can take next place in the sentence (or text). This property of the token in the context is usually measured in terms of the theory of probability, and it also has some well-known probabilistic properties. For example, the sum of the probabilities of all words which can or cannot (in terms of common sense) “continue” the left context is equal to one. A quarter-century ago these assumptions led to the emergence of the first artificial language models (ALM).
 
 Research papers in the field of cognitive science have shown that correct prediction of the next word while reading a sentence simplifies the perception of a language unit and its integration into the context. Incorrect prediction can lead to re-analysis of the context which is why language processing is slowed down. However, the types of dependencies between these two facts are still not well studied.
@@ -61,6 +58,7 @@ Nowadays, in linguistic and cognitive studies, to obtain data describing the pro
 Our approach is based on the specific Russian corpus manually collected for the purposes of experiments with eye-tracking. The corpus was used for conducting a cloze test. This fact assumes that we have not only correct word for predicting left context of different length, but also probabilities for each predicted word, computed according to the result of cloze task experiment. The LM based on these answers we will call "human-like". So the uniqueness of the research is that we can compare artificial language models with the model which approximates real human expectations about the next word for given sequence.
 It is important to note that cloze tasks require a major time commitment and is financially expensive, therefore one of the goals of this study is to find out whether the actual human respondents can be replaced by an artificial language model trained on a big corpus.
 
+% TODO (@SEMEN SOROKIN) объединить с интродакшн, мб как-то связать или убрать вообще, т.к. абзац незаконченный.
 \section{Background}
 
 % TODO: more background required; let's include our reviews from the
@@ -76,6 +74,11 @@ in language comprehension?” \cite{kuperberg-jaeger}, the reaction time is in d
  be predictive. The authors also state that as the previous context expands, the predictability of the next word increases leading to - in cloze tests - higher accuracy of predicting the next work, and - in eye-movement experiments - to shorter fixation duration
 % TODO [i]
 . 
+
+\section{Related work}
+% TODO (@Anastasia Nikiorova) Add article reviews for related works
+
+There are several scientific papers that propose different algorithms for cloze answer generation. In \cite{zhou-cloze} the authors state the importance of next word prediction in language modelling and its potential contribution to OCR and hand writing recognition. The authors enhance existing models with ELMo and BERT language models and train on the CLOTH dataset of cloze tests. Expectedly, BERT models show the highest performance (0.86 and 0.83 accuracy scores on test dataset for BERT Large and BERT Base consecutively), as this model was initially trained to recover masked tokens in text.
 
 \section{Methodology}
 
