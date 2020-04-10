@@ -1,0 +1,6 @@
+To build paper.pdf, use xelatex and bibtex:
+```
+xelatex paper.tex
+bibtex paper.aux
+xelatex paper.tex
+```

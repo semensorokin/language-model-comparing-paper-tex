@@ -1,0 +1,71 @@
+[PREDICT] Atricle Outline
+
+Predictability Project - Article Structure
+
+Abstract[a]
+
+Problem Statement
+
+Indication of Methodology
+
+Main Findings
+
+Principal Conclusion
+
+Introduction
+
+Literature overview[b]
+
+Previous research in the field [Laurinavichyute, A.K. et al., 2018] Anastasia
+
+What hasn’t been researched/solved in previous research → gaps:
+
+There are similar studies for other languages (German etc.), but none for Russian. Daria
+
+The task of replacing the cloze task with a neural network (i.e. task of creating a cloze task model) is new. Daria
+
+How the present study will cover the gap Anastasia
+
+Methodology
+
+3.1. Description of Cloze task dataset Anastasia
+
+3.2. Corpus-based language models and their architecture Sergey
+
+3.3. Corpora Sergey
+
+3.4. Overview of used metrics. Semen
+
+        Mean accuracy
+
+Absolute number of correct word predictions
+
+        Context consistency
+
+        Kolmagorov-Smirnov test
+
+        Kullback–Leibler divergence Sergey
+
+3.5. PoS tagging. Daria
+
+3.6. Object - Modifier -  Verb - Functional tagging. Darya
+
+3.7. Semantic comparison Darya
+
+Results
+
+4.1. Quantitative and qualitative analysis of cloze task language model Semen
+
+4.2. Model comparison on the Lexical Level Semen, Sergey, Daria
+
+4.3. Model comparison on the PoS level Semen, Anastasia
+
+4.4. Model comparison on the OMVF level Semen,  Daria
+
+Discussion[c] Daria & Anastasia
+
+Acknowledgements
+
+References
+
+Bibliography
