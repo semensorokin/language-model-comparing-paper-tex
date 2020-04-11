@@ -218,7 +218,7 @@ Among all, there is a Bigram HMM on NCRL + BERT fine-tuned on the NCRL model, wh
 
 \head{Renormalization of probabilities}
 
-To evaluate each model’s predictions, we took the first 30 most probable words. Each probability was renormalized by dividing originally computed word-wise probability by the sum of probabilities of the first 30 words. This way the sum of probabilities the selected words would equal 1.
+To evaluate each model’s predictions, we took the first 30 most probable words. Each probability was renormalized by dividing originally computed word-wise probability by the sum of probabilities of the first 30 words. This way the sum of probabilities the selected words would equal to 1.
 
 \subsection{Overview of Used Metrics}
 
@@ -288,9 +288,9 @@ Word class probabilities were computed as follows: each word in the model’s v
 
 We have also tried to use different tags for our part-of-speech tagging. Instead of using all of the tags, we thought we could use a more generalized set of object, verb, modifier, and functional word, because when a person mentally chooses the next word, they might not think in terms of the usual parts of speech, but choose generally an object, or a description of an object, or a verb, or just some functional word.
 
-Firstly, we converted all of the modified Pymorphy tags into 4 general sets: 'ADJ', 'ADVB', 'NUMR' were generalized to 'MOD'; 'INFN' and 'PRED' - to 'VERB'; 'NPRO' to 'NOUN'; 'PREP', 'PRCL', 'CONJ' and 'INTJ' to 'FUNC' for each context. Then, we have counted probabilities of these tags in the same manner as the usual parts of speech. 
+Firstly, we converted all of the modified Pymorphy tags into 4 general sets: 'ADJ', 'ADVB', 'NUMR' were generalized to 'MOD'; 'INFN' and 'PRED' - to 'VERB'; 'NPRO' to 'NOUN' (Object); 'PREP', 'PRCL', 'CONJ' and 'INTJ' to 'FUNC' for each context. Then, we have counted probabilities of these tags in the same manner as the usual parts of speech. 
 
-We noticed that the generalized probabilities were overall higher than with modified Pymorphy tags.
+We noticed that the generalized probabilities were overall higher than with modified Pymorphy tags - further we will refer to it as OMVF (object-modifier-verb-functional).
 
 \subsection{Semantic Comparison}
 
@@ -309,9 +309,7 @@ To compare semantic vectors for each context, firstly, we cleared all of the wor
 
 After the decision on the number of words was made, with the help of gensim in Python a vector for each word was extracted.
 
-Then, MiniBatchKmeans (a modified version of the K-means algorithm,
-that uses mini-batches to reduce computation time, while at the same
-time trying to optimize the same goal function \cite{bejar}) algorithm in sklearn was used to find “cluster centers”, or mean semantic vector for one model for each context. And at last, we found cosine similarity (also with sklearn library) for each pair of semantic vectors for each pair of models.
+Then, MiniBatchKmeans (a modified version of the K-means algorithm, that uses mini-batches to reduce computation time, while at the same time trying to optimize the same goal function \cite{bejar}) algorithm in sklearn was used to find “cluster centers”, or mean semantic vector for one model for each context. And at last, we computed cosine similarity (also with sklearn library) for each pair of semantic vectors for each pair of models.
 
 \section{Results}
 
@@ -358,7 +356,7 @@ The mean quantity of predictions for the language model built on cloze-task resu
 \end{table*}
 
 In Table 3, contexts with minimum variance in filling
-are listed. It is worth emphasizing that in all the above cases there was no variance in respondents’ answers, i.e. all respondents gave the same one answer for these contexts. What is more, this predicted word was the original word from the corpus.
+are listed. It is worth emphasizing that in all these cases there was no variance in respondents’ answers, i.e. all respondents gave the same one answer for these contexts. What is more, this predicted word was the original word from the corpus.
 
 We classified these contexts based on their constraining ability and found out the following groups of com:
 \newline
@@ -461,7 +459,7 @@ At the next step, we performed Kolmogorov-Smirnov testing to find the similarity
 To measure model predictions on the semantic level, the cosine similarity between each context’s predicted words centroid vector was found. The number of words was selected dynamically for each context by maximizing vector significance with the minimum words. Figure 6 reflects the results.
 \begin{figure}
 \caption{Cosine Similarity between each pair of models .}
-\label{fig:ks-lexical}
+\label{fig:ks-lexical-pairs}
 \centering
 \includegraphics[width=0.5\textwidth]{figures/pdf/cosine-similarity-lexical.pdf}
 \end{figure}
