@@ -146,7 +146,7 @@ A one-layer long short-term memory (LSTM) recurrent neural network model was use
 \head{BERT}
 
 Bidirectional Encoder Representations from Transformers
-(BERT) \cite{bert} is trained on a masked language modeling objective. Unlike a traditional language modeling objective of predicting the next word in a sequence given the history, masked language modeling predicts a word given its left and right context. Because the model expects context from both directions, it is not obvious how BERT can be used as a traditional language model (i.e. to evaluate the probability of a text sequence) or how to sample from it. We test several ideas: give the model all of the content, except masked word, and using the technique[] to rework BERT as a classical language model.
+(BERT) \cite{bert} is trained on a masked language modeling objective. Unlike a traditional language modeling objective of predicting the next word in a sequence given the history, masked language modeling predicts a word given its left and right context. Because the model expects context from both directions, it is not obvious how BERT can be used as a traditional language model (i.e. to evaluate the probability of a text sequence) or how to sample from it. We test several ideas: give the model all of the content, except masked word, and using the technique\cite{wang2019bert_lm} to rework BERT as a classical language model.
 
 For experiments, we used BERT trained on the Russian Wikipedia corpus
 \cite{ruwiki}. To show differences between models, we will fine-tune BERT with our corpora.
