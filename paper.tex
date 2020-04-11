@@ -65,7 +65,11 @@ Our study compare several language models across four ``levels'' of prediction: 
 Besides having importance in the field of neuro- and psycholinguistics, cloze task answer generation could also potentially be used for OCR and hand writing recognition, as mentioned in the paper by Kuperberg and Jaeger \cite{kuperberg-jaeger}.
 
 \begin{table*}
-\caption{Example of stimuli sentence from RNC in cloze task with probabilities of the next word. Stimuli: \textit{"А промывать манную крупу перед тем, как варить ее, не пробовали?"} (English translation: \textit{"Have you tried to rinse semolina before boiling it?"})
+\label{tbl:stimuli}
+\caption{Example of stimuli sentence from RNC in cloze task with
+probabilities of the next word. Stimuli: \textit{``А промывать манную
+крупу перед тем, как варить ее, не пробовали?''} (English translation:
+\textit{``Have you tried to rinse semolina before boiling it?''})
 \newline}
 \centering
 \begin{tabular}{llr}
@@ -120,7 +124,7 @@ An LSTM-based model for cloze-style machine comprehension is proposed in \cite{w
 
 Cloze task described in \cite{taylor:1953} is an experiment in which one or more words are removed from a sentence and the participants are asked to fill in the missing content. It is commonly carried out for assessing native speakers of a language, which is aimed to understand respondents’ comprehension of a language and their ability to predict missing portions of written texts \cite{laurinavichyute}. This experiment presumes that native speakers can understand context and vocabulary to identify the correct semantic field or part of speech of a missing word.
 
-We used the dataset with cloze task answers from \cite{laurinavichyute}. The dataset is based on 144 sentences randomly selected from the National Corpus of the Russian Language (RNC, ruscorpora.ru) - an online corpus of Russian texts with extensive search options. These sentences were slightly edited: the authors replaced rare infrequent words with more frequent ones and shortened the sentences when they exceeded the preset maximum length of 13 words. The stimuli sentences were subjected to the cloze task experiment. Respondents were asked to successively predict the next words for each context. An example of stimuli that were shown to the participants is presented in Table 1 with corresponding correct next words and calculated predictability scores.
+We used the dataset with cloze task answers from \cite{laurinavichyute}. The dataset is based on 144 sentences randomly selected from the National Corpus of the Russian Language (RNC, ruscorpora.ru) - an online corpus of Russian texts with extensive search options. These sentences were slightly edited: the authors replaced rare infrequent words with more frequent ones and shortened the sentences when they exceeded the preset maximum length of 13 words. The stimuli sentences were subjected to the cloze task experiment. Respondents were asked to successively predict the next words for each context. An example of stimuli that were shown to the participants is presented in Table~\ref{tbl:stimuli} with corresponding correct next words and calculated predictability scores.
 
 Each context received from ~10 to ~100 responses, not all of which matched the correct word. The predictability of each next word was computed as the number of correctly predicted words divided by the total number of predicted words. The Laurinavichyute et al. article and the full list of sentences used in the study can be found. 
 
@@ -155,9 +159,10 @@ For experiments, we used BERT trained on the Russian Wikipedia corpus
 The Russian News Corpus \cite{runews} includes newspaper articles published in the 2000s.
 The National Corpus of Russian Language \cite{natcorp} includes written texts from the middle of the 18th to the middle of the 20th century.
 
-Some corpus statistics are presented in Table 2.
+Some corpus statistics are presented in Table~\ref{tbl:corpus}.
 
 \begin{table}
+\label{tbl:corpus}
 \caption{Corpus statistics. RNC is the Russian News Corpus, and NCRL is the National Corpus of the Russian Language.
 \newline}
 \centering
@@ -327,32 +332,31 @@ The mean quantity of predictions for the language model built on cloze-task resu
 
 \vspace{0.5em}
 
-\begin{tabular}{l}
-\begin{russian} 1. Какие главные лекарства должны входить [в]\end{russian} \\
-\begin{english} (What are the main drugs that should be included [in])\end{english} \\
-\begin{russian} 2. В современном обществе семья и школа оказывают большое [влияние]\end{russian} \\
-\begin{english} (In modern society, family and school have a large [influence])\end{english} \\
-\begin{russian} 3. Зачем ему звонить если откликается спокойный женский [голос]\end{russian} \\
-\begin{english} (Why would he call if a calm female [voice] answers)\end{english} \\
-\begin{russian} 4. Ирине досталась отдельная комната в двухкомнатной [квартире]\end{russian} \\
-\begin{english} (Irina got a separate room in a two-room [apartment])\end{english} \\
-\begin{russian} 5. Они не ели целый [день]\end{russian} \\
-\begin{english} (They haven't eaten all [day])\end{english} \\
-\begin{russian} 6. Во избежание ожогов надо нанести на лицо небольшое [количество]\end{russian} \\
-\begin{english} (To avoid burns on the face, apply a small [amount])\end{english} \\
-\begin{russian} 7. Дрозды и скворцы начали вить семейные гнезда неподалеку друг от [друга]\end{russian} \\
-\begin{english} (Blackbirds and starlings began to twist family nests not far from each [other])\end{english} \\
-\begin{russian} 8. Собаку виновницу случившегося приказали сечь хотя в чем была ее [вина]\end{russian} \\
-\begin{english} (The dog responsible for the incident was ordered to be beaten, although it wasn't really her [fault])\end{english} \\
-\begin{russian} 9. С нескрываемой едкой иронией отзываются они друг о [друге]\end{russian} \\
-\begin{english} (With undisguised caustic irony, they speak of each [other])\end{english} \\
-\begin{russian} 10. Олень бродил среди берез жевал талый [снег]\end{russian} \\
-\begin{english} (Deer wandered among the birches chewing melting [snow])\end{english} \\
+\begin{tabular}{rl}
+1. & \begin{russian} Какие главные лекарства должны входить (в)\end{russian} \\
+& \textit{ What are the main drugs that should be included (in) } \\
+2. & \begin{russian} В современном обществе семья и школа оказывают большое (влияние)\end{russian} \\
+& \textit{ In modern society, family and school have a large (influence) } \\
+3. & \begin{russian} Зачем ему звонить если откликается спокойный женский (голос)\end{russian} \\
+& \textit{ Why would he call if a calm female (voice) answers } \\
+4. & \begin{russian} Ирине досталась отдельная комната в двухкомнатной (квартире)\end{russian} \\
+& \textit{ Irina got a separate room in a two-room (apartment) } \\
+5. & \begin{russian} Они не ели целый (день)\end{russian} \\
+& \textit{ They haven't eaten all (day) } \\
+6. & \begin{russian} Во избежание ожогов надо нанести на лицо небольшое (количество)\end{russian} \\
+& \textit{ To avoid burns on the face, apply a small (amount) } \\
+7. & \begin{russian} Дрозды и скворцы начали вить семейные гнезда неподалеку друг от (друга)\end{russian} \\
+& \textit{ Blackbirds and starlings began to twist family nests not far from each (other) } \\
+8. & \begin{russian} Собаку виновницу случившегося приказали сечь хотя в чем была ее (вина)\end{russian} \\
+& \textit{ The dog responsible for the incident was ordered to be beaten, although it wasn't really her (fault) } \\
+9. & \begin{russian} С нескрываемой едкой иронией отзываются они друг о (друге)\end{russian} \\
+& \textit{ With undisguised caustic irony, they speak of each (other) } \\
+10. & \begin{russian} Олень бродил среди берез жевал талый (снег)\end{russian} \\
+& \textit{ The deer wandered among the birches chewing melting (snow) } \\
 \end{tabular}
 \end{table*}
 
-In Table 3, contexts with minimum variance in filling
-are listed. It is worth emphasizing that in all these cases there was no variance in respondents’ answers, i.e. all respondents gave the same one answer for these contexts. What is more, this predicted word was the original word from the corpus.
+In Table~\ref{tbl:min-var}, contexts with minimum variance in filling are listed. It is worth emphasizing that in all these cases there was no variance in respondents’ answers, i.e. all respondents gave the same one answer for these contexts. What is more, this predicted word was the original word from the corpus.
 
 We classified these contexts based on their constraining ability and found out the following groups of com:
 \newline
@@ -441,7 +445,7 @@ with BERT (58\% of overlap) and BERT trained on RNC.
 
 \head{Kolmogorov-Smirnov Tests}
 
-At the next step, we performed Kolmogorov-Smirnov testing to find the similarity in the probability distributions of the model predictions. Figure 5 also reflects the sum value of the pairwise comparison of the contexts using Kolmogorov-Smirnov testing. For convenience, all the values were normalized. Observations show that the closest probability distribution is seen in the LSTM model. However, as we see, there is a variation in metric values from 0.9 to 6.2 for different models. Thus, we can assert that the difference between all models and a cloze task is rather large and in some way unacceptable.
+At the next step, we performed Kolmogorov-Smirnov testing to find the similarity in the probability distributions of the model predictions. Figure~\ref{fig:ks-lexical} also reflects the sum value of the pairwise comparison of the contexts using Kolmogorov-Smirnov testing. For convenience, all the values were normalized. Observations show that the closest probability distribution is seen in the LSTM model. However, as we see, there is a variation in metric values from 0.9 to 6.2 for different models. Thus, we can assert that the difference between all models and a cloze task is rather large and in some way unacceptable.
 
 \begin{figure}
 \caption{Kolmogorov-Smirnov tests, lexical level.}
@@ -452,10 +456,10 @@ At the next step, we performed Kolmogorov-Smirnov testing to find the similarity
 
 \head{Cosine Similarity}
 
-To measure model predictions on the semantic level, the cosine similarity between each context’s predicted words centroid vector was found. The number of words was selected dynamically for each context by maximizing vector significance with the minimum words. Figure 6 reflects the results.
+To measure model predictions on the semantic level, the cosine similarity between each context’s predicted words centroid vector was found. The number of words was selected dynamically for each context by maximizing vector significance with the minimum words. Figure~\ref{fig:cosine-lexical} reflects the results.
 \begin{figure}
 \caption{Cosine Similarity between each pair of models .}
-\label{fig:ks-lexical-pairs}
+\label{fig:cosine-lexical}
 \centering
 \includegraphics[width=0.5\textwidth]{figures/pdf/cosine-similarity-lexical.pdf}
 \end{figure}
@@ -464,10 +468,11 @@ To measure model predictions on the semantic level, the cosine similarity betwee
 
 Due to the fact that all of our models are word-level, and in order to lower the casing variability we've combined all our vocabularies into one. For this compound vocabulary, we calculated the KL divergence of our models.
 
-Table 3 shows the scores for three different models with
-bigram HMM trained on NCRL showing the best results. Unfortunately, this heat map does not show us changes in the language model (LM) distances context-lengthwise. Top 3 lengthwise LM distances are showb in Table 4.
+Table~\ref{tbl:kl-scores} shows the scores for three different models with
+bigram HMM trained on NCRL showing the best results. Unfortunately, this heat map does not show us changes in the language model (LM) distances context-lengthwise. Top 3 lengthwise LM distances from cloze are shown in Table~\ref{tbl:lm-distances}.
 
 \begin{table}
+\label{tbl:kl-scores}
 \centering
 
 \caption{KL scores for three different models, all trained on the
@@ -509,15 +514,15 @@ of tokens.
 1.99 &
 1.77 &
 1.89 \\
-8 &
+8 &
 1.73 &
 1.69 &
 1.80 \\
-9 &
+9 &
 1.97 &
 1.55 &
 1.63 \\
-10 &
+10 &
 2.46 &
 1.71 &
 1.80 \\
@@ -528,17 +533,25 @@ of tokens.
 \end{tabular}
 \end{table}
 
-As we see, the bigram models start to higher the distance from 1 to 6 context length, but BERT, on the contrary, starts to lower the distance up to 6 context length. For this case, we merged the bigram model and BERT at length equal to 6.
+As we see, the bigram models start to increase the distance from 1 to 6 context length, but BERT, on the contrary, starts to lower the distance up to 6 context length. For this case, we merged the bigram model and BERT at length equal to 6.
 
-KL(Cloze || Cloze) = 0.0
+\begin{table}
+\label{tbl:lm-distances}
+\centering
 
-KL(Cloze || HMM) = 1.79
+\caption{Distance in the KL-metric between the cloze task and language models.
+\newline}
 
-KL(Cloze || BERT) = 1.93
-
-KL(Cloze || LSTM) = 1.84
-
-KL(Cloze || HMM + BERT) = 1.71
+\begin{tabular}{lr}
+\textbf{Model} &
+\textbf{KL-distance to cloze} \\
+\hline
+   HMM & 1.79
+\\ BERT & 1.93
+\\ LSTM & 1.84
+\\ HMM + BERT & 1.71
+\end{tabular}
+\end{table}
 
 \subsection{Model Comparison on the PoS Level}
 
@@ -610,7 +623,7 @@ tag generator, this threshold would be 25\%. Such differences in magnitudes sugg
 
 \head{Model Consistency and Kolmogorov-Smirnov Test on OMVF}
 
-Consistency at the object-verb-functional-modifier level  and Kolmogorov-Smirnov Test are is shown in Figure 12 and 13 correspondingly.
+Consistency at the object-verb-functional-modifier level  and Kolmogorov-Smirnov Test are is shown in Figure~\ref{fig:heatmap-context-accord-ovfm} and~\ref{fig:heatmap-ks-ovfm} correspondingly.
 
 \begin{figure}
 \label{fig:heatmap-context-accord-ovfm}
