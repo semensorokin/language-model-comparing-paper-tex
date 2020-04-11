@@ -117,11 +117,9 @@ An LSTM-based model for cloze-style machine comprehension is proposed in \cite{w
 
 \subsection{Cloze Probabilities}
 
-Cloze task described in Taylor (1953) is an experiment in which one or more words are removed from a sentence and the participants are asked to fill in the missing content. 
+Cloze task described in \cite{taylor:1953} is an experiment in which one or more words are removed from a sentence and the participants are asked to fill in the missing content. It is commonly carried out for assessing native speakers of a language, which is aimed to understand respondents’ comprehension of a language and their ability to predict missing portions of written texts \cite{laurinavichyute}. This experiment presumes that native speakers can understand context and vocabulary to identify the correct semantic field or part of speech of a missing word.
 
-We used the dataset with cloze task answers from \cite{laurinavichyute}. The dataset is based on 144 sentences randomly selected from the Russian National Corpus (RNC, ruscorpora.ru) - an online corpus of Russian texts with extensive search options. These sentences were slightly edited: the authors replaced rare infrequent words with more frequent ones and shortened the sentences when they exceeded the preset maximum length of 13 words. The stimuli sentences were subjected to the cloze task experiment. Cloze task \cite{taylor:1953} is a test, commonly carried out for assessing native speakers of a language, which is aimed to understand respondents’ comprehension of a language and their ability to predict missing portions of written texts \cite{laurinavichyute}. This experiment presumes that native speakers can understand context and vocabulary to identify the correct semantic field or part of speech of a missing word.
-
-In \cite{laurinavichyute}, the respondents were asked to successively predict the next words for each context. An example of stimuli that were shown to the participants is presented in Table 1 with corresponding correct next words and calculated predictability scores.
+We used the dataset with cloze task answers from \cite{laurinavichyute}. The dataset is based on 144 sentences randomly selected from the Russian National Corpus (RNC, ruscorpora.ru) - an online corpus of Russian texts with extensive search options. These sentences were slightly edited: the authors replaced rare infrequent words with more frequent ones and shortened the sentences when they exceeded the preset maximum length of 13 words. The stimuli sentences were subjected to the cloze task experiment. Respondents were asked to successively predict the next words for each context. An example of stimuli that were shown to the participants is presented in Table 1 with corresponding correct next words and calculated predictability scores.
 
 Each context received from ~10 to ~100 responses, not all of which matched the correct word. The predictability of each next word was computed as the number of correctly predicted words divided by the total number of predicted words. The Laurinavichyute et al. article and the full list of sentences used in the study can be found. 
 
@@ -148,7 +146,7 @@ Bidirectional Encoder Representations from Transformers
 (BERT) \cite{bert} is trained on a masked language modeling objective. Unlike a traditional language modeling objective of predicting the next word in a sequence given the history, masked language modeling predicts a word given its left and right context. Because the model expects context from both directions, it is not obvious how BERT can be used as a traditional language model (i.e. to evaluate the probability of a text sequence) or how to sample from it. We test several ideas: give the model all of the content, except masked word, and using the technique[] to rework BERT as a classical language model.
 
 For experiments, we used BERT trained on the Russian Wikipedia corpus
-\cite{ruwiki}. To show differences between models, we will fine-tune BERT with our corpora.
+\cite{ruwiki}. To show differences between models, we fine-tuned BERT with our corpora.
 
 
 \subsection{Corpora}
