@@ -34,28 +34,34 @@ Russian Federation}
 
 \section{Introduction}
 
-Nowadays language models are the most powerful instrument to transfer knowledge. Mostly pre-trained neural network models are more accurate in any type of task. This tendency in language processing - usage of language model (LM) weights as a part of base model weights - took place after word2vec announcing. Today there are three main ways to use pre-trained LM in different natural language processing tasks.
+Nowadays language models are the most powerful instrument to transfer knowledge. Mostly pre-trained neural network models are more accurate in any type of task. This tendency in language processing - usage of language model (LM) weights as a part of base model weights - took place after word2vec announcing. Today there are three main ways to use pre-trained LM in different natural language processing tasks:
 \begin{itemize}
 	\item Use pre-trained LM as universal embedder for text/sentence
 	\item Fit pre-trained LM on new data (domain adaptation) and also use as an embedder
 	\item Fit pre-trained LM as a part of a more complex and specific model
 \end{itemize}
-It is important to note that the resulting model is very dependent on the quality of the based LM. So a possibility to compare models is also in demand and we propose a new comprehensive way to explore properties of different language models.
-Comparing LM is not a new topic. There is a lot of different tasks to measure their quality. It starts with the google analogy task for word2vec \cite{mikolov2013efficient} and now GLUE tasks \cite{Wang2018GLUEAM} are used for these purposes. However, we want to check the generative ability of a different type of LM and compare them to each other.
+It is important to note that the resulting system is dependent on the
+quality of the underlying LM; thus strategies to compare models are
+also in demand. We propose a new comprehensive way to explore properties of different language models.
+Comparison of langauge models is not a new topic, and there are many
+different measures of their quality. Popular modern analyses are the
+Google analogy task for word2vec \cite{mikolov2013efficient} and now
+GLUE tasks \cite{Wang2018GLUEAM}. However, we want to check the
+generative ability of several different types of LM and compare them.
+
 One of the key terms in natural language understanding and speech generation is predictability. In cognitive linguistics, it implies a confidence degree of a language unit (word, part of speech, etc.) that can take next place in the sentence (or text). This property of the token in the context is usually measured in terms of the theory of probability, and it also has some well-known probabilistic properties. For example, the sum of the probabilities of all words which can or cannot (in terms of common sense) follow the left context is equal to one. A quarter-century ago these assumptions led to the emergence of the first artificial language models (ALM).
 
 Research papers in the field of cognitive science have shown that correct prediction of the next word while reading a sentence simplifies the perception of a language unit and its integration into the context. Incorrect prediction can lead to a re-analysis of the context which is why language processing is slowed down. However, the types of dependencies between these two facts are still not well studied.
 
-Nowadays, in linguistic and cognitive studies, to obtain data describing the probabilistic distribution of lexical units (for a specific context), artificial language models of various architectures are used or cloze tests are conducted on real-life participants. They are asked to replace the missing language item in a sentence. However, The cloze test is frequently criticized for lack of coverage. Nevertheless, in terms of common sense, it is a cloze test, which uses the so-called “human” linguistic mechanisms of speech generation to collect the data. The ALM, in contrast, is basically a set of various mathematical algorithms applied to the text corpus.
+Nowadays, in linguistic and cognitive studies, to obtain data describing the probabilistic distribution of lexical units (for a specific context), artificial language models of various architectures are used or cloze tests are conducted. In a cloze test, participants asked to replace a missing language item in a sentence. The cloze test is frequently criticized for lack of coverage; nevertheless, in terms of common sense, it is cloze test which uses the so-called “human” linguistic mechanisms of speech generation to collect the data. The ALM, in contrast, is basically a set of various mathematical algorithms applied to the text corpus.
 
-Our approach is based on the specific Russian corpus manually collected for the purposes of experiments with eye-tracking. The corpus was used for conducting a cloze test in the paper by Laurinavichyute et al. \cite{laurinavichyute}. This fact assumes that we have not only correct word for predicting left context of different lengths, but also probabilities for each predicted word, computed according to the result of the cloze task experiment. The LM based on these answers we will call "human-like". So the uniqueness of the research is that we can compare artificial language models with the model which approximates real human expectations about the next word for a given sequence.
+Our analysis and gold-standard is a cloze test conducted by Laurinavichyute et al \cite{laurinavichyute} from an eye-tracking study. We take the results of the cloze task as a proxy for the underlying probability distribution of next-word continuations of partial sentences.
+The LM based on these answers we will call "human-like". So the uniqueness of the research is that we can compare artificial language models with the model which approximates real human expectations about the next word for a given sequence.
 
-It is important to note that cloze tasks require a major time commitment and are financially expensive, therefore one of the goals of this study is to find out whether the actual human respondents can be replaced by an artificial language model trained on a big corpus, or, whether language models can simulate human performance on this task.
-
-In our work, we hope to compare different language models to see which of them can be used for an automated cloze task, i. e. a model that is able to predict/guess the next missing word or POS in a sentence.
+It is important to note that cloze tasks require a major time commitment and are financially expensive. One of the goals of this study is to find out whether the actual human respondents can be replaced by an artificial language model trained on a large corpus, or, whether language models can simulate human performance on this task.
+Our study compare several language models across four ``levels'' of prediction: lexical (distribution of surface forms), part-of-speech (distribution of morphological class), and two classes of semantic prediction.
 
 Besides having importance in the field of neuro- and psycholinguistics, cloze task answer generation could also potentially be used for OCR and hand writing recognition, as mentioned in the paper by Kuperberg and Jaeger \cite{kuperberg-jaeger}.
-
 
 \begin{table*}
 \caption{Example of stimuli sentence from RNC in cloze task with probabilities of the next word. Stimuli: \textit{"А промывать манную крупу перед тем, как варить ее, не пробовали?"} (English translation: \textit{"Have you tried to rinse semolina before boiling it?"})
