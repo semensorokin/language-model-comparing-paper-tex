@@ -130,7 +130,7 @@ Each context received from ~10 to ~100 responses, not all of which matched the c
 
 \subsection{Corpus-Based Probabilities}
 
-For computing сorpus-based probabilities, different model types and training corpora were selected. The goal of these combinations is to represent some dependencies (if they exist) between model architecture,  vocabulary and to compare results.
+For computing сorpus-based probabilities, different model types and training corpora were selected. The goal of these combinations is to represent some dependencies (if they exist) between model architecture,  vocabulary and to compare results.
 
 In this research, we were solving the task of language modeling - the task of predicting the next word given the corpus. 
 Several models perform well of this task type, including HMM, LSTM, and BERT. We used pre-trained models on our data to predict the next word for each context. These models were trained on different corpora to see how corpora influence model performance.
@@ -221,13 +221,13 @@ Among all, there is a Bigram HMM on NCRL + BERT fine-tuned on the NCRL model, wh
 
 \head{Renormalization of probabilities}
 
-To evaluate each model’s predictions, we took the first 30 most probable words. Each probability was renormalized by dividing originally computed word-wise probability by the sum of probabilities of the first 30 words. This way the sum of probabilities the selected words would equal to 1.
+To evaluate each model’s predictions, we took the first 30 most probable words. Each probability was renormalized by dividing originally computed word-wise probability by the sum of probabilities of the first 30 words. This way the sum of probabilities the selected words would equal to 1.
 
 \subsection{Overview of Used Metrics}
 
 \head{Mean accuracy}
 
-The metric is used to compute the mean of correct word prediction across all contexts.  Range of values from 0 to 1. It was computed as a mean value of the array of accuracies.
+The metric is used to compute the mean of correct word prediction across all contexts.  Range of values from 0 to 1. It was computed as a mean value of the array of accuracies.
 
 \head{Absolute number of correct word predictions}
 
@@ -246,15 +246,15 @@ The Kolmogorov–Smirnov statistic is
 \[ {D_{n,m}=\sup _{x}|F_{1,n}(x)-F_{2,m}(x)|,} \]
 
 
-where \({F_{1,n}}\) and  \({F_{2,m}}\) are the empirical distribution
-functions of the first and the second sample respectively, and
+where \({F_{1,n}}\) and  \({F_{2,m}}\) are the empirical distribution
+functions of the first and the second sample respectively, and
 \({\sup}\)
 is the supremum function. The null hypothesis is rejected at level
 \({\alpha }\) if 
 
 \[ {D_{n,m}>c(\alpha ){\sqrt {\frac {n+m}{nm}}},} \]
 
-where {n} and {m} are the sizes of first and second sample respectively, and where c(α) is the inverse of the Kolmorogov distribution at α, which can be calculated as 
+where {n} and {m} are the sizes of first and second sample respectively, and where c(α) is the inverse of the Kolmorogov distribution at α, which can be calculated as 
 
 
 \[ { c\left(\alpha \right)={\sqrt {-{\frac {1}{2}}\ln \alpha }}.} \]
@@ -265,7 +265,7 @@ This metric was used to compare both lexical and word class probability distribu
 
 \head{Kullback–Leibler Divergence}
 
-Cross-entropy loss, or log loss, measures the performance of a classification model whose output is a probability value between 0 and 1. Cross-entropy loss increases as the predicted probability diverge from the actual label. The cross-entropy shows the difference between probability distributions p and q. Kullback and Leibler defined a similar measure now known as KL divergence. This measure quantifies how similar a probability distribution p is to a candidate distribution q. We used KL-divergence to compare several language models.
+Cross-entropy loss, or log loss, measures the performance of a classification model whose output is a probability value between 0 and 1. Cross-entropy loss increases as the predicted probability diverge from the actual label. The cross-entropy shows the difference between probability distributions p and q. Kullback and Leibler defined a similar measure now known as KL divergence. This measure quantifies how similar a probability distribution p is to a candidate distribution q. We used KL-divergence to compare several language models.
 
 \head{Cosine Similarity}
 
@@ -284,7 +284,7 @@ Cosine similarity was used to measure the closeness of semantic vectors of predi
 
 \subsection{Part-of-Speech Probabilities}
 
-Word class probabilities were computed as follows: each word in the model’s vocabulary (\(N = 500000\) most frequent words in the training corpus) and each word in the stimuli sentences was tagged for word class and morphological features using PyMorphy2 analyzer 
+Word class probabilities were computed as follows: each word in the model’s vocabulary (\(N = 500000\) most frequent words in the training corpus) and each word in the stimuli sentences was tagged for word class and morphological features using PyMorphy2 analyzer 
 \cite{korobov:2015} and the predictions of the model were compared to the annotation of the target words. A word class match was coded if the predicted and target word belonged to the same word class. The probability of a word class was computed by summing probabilities of all words in the model’s vocabulary which had the morphosyntactic feature in question. For example, to estimate the word class probability in a sentence “A mobile \underline{\hspace{1em}}”, where "phone" is the target word, we would sum up probabilities of all nouns in the model’s vocabulary. For morphologically ambiguous words (e.g., рот ‘mouth’ in the nominative or accusative singular), all possible variants were considered in the probability estimation.
 
 \subsection{Probabilities for OBJECT-VERB-FUNCTIONAL-MODIFIER}
@@ -310,7 +310,7 @@ To compare semantic vectors for each context, firstly, we cleared all of the wor
 
 After the decision on the number of words was made, with the help of \texttt{gensim} in Python a vector for each word was extracted.
 
-Then, MiniBatchKmeans (a modified version of the K-means algorithm, that uses mini-batches to reduce computation time, while at the same time trying to optimize the same goal function \cite{bejar}) algorithm in sklearn was used to find “cluster centers”, or mean semantic vector for one model for each context. And at last, we computed cosine similarity (also with sklearn library) for each pair of semantic vectors for each pair of models.
+Then, MiniBatchKmeans (a modified version of the K-means algorithm, that uses mini-batches to reduce computation time, while at the same time trying to optimize the same goal function \cite{bejar}) algorithm in sklearn was used to find “cluster centers”, or mean semantic vector for one model for each context. And at last, we computed cosine similarity (also with sklearn library) for each pair of semantic vectors for each pair of models.
 
 \section{Results}
 
@@ -358,27 +358,24 @@ The mean quantity of predictions for the language model built on cloze-task resu
 
 In Table~\ref{tbl:min-var}, contexts with minimum variance in filling are listed. It is worth emphasizing that in all these cases there was no variance in respondents’ answers, i.e. all respondents gave the same one answer for these contexts. What is more, this predicted word was the original word from the corpus.
 
-We classified these contexts based on their constraining ability and found out the following groups of com:
-\newline
-
-Semantically constraining contexts [contexts \#3, 4, 6, 8]
-
-Syntactically constraining contexts [context \#1]
-
-Idiomatically constraining contexts [contexts \#2, 5, 7, 9, 10]
-\newline
+We classified these contexts based on their constraining ability:
+\begin{itemize}
+	\item Semantically constraining contexts (contexts \#3, 4, 6, 8)
+	\item Syntactically constraining contexts (context \#1)
+	\item Idiomatically constraining contexts (contexts \#2, 5, 7, 9, 10)
+\end{itemize}
 
 The maximum number of different answers were received for the “на болотах” (“On the Swamps”) context - 87 words, which is explained by the absence of any limiting semantic properties of the context.
 
 In this regard, the study of the artificial language model distribution is meaningless, as it will always be uniform, to say, the indicator for each context in similar histograms will be equal to the size of the vocabulary.
 
-Another important aspect of the study of the linguistic model of the cloze task is the relationship between the length of the context and the probability of predicting (=predictability of) the correct word.
+Another important aspect of the study of the linguistic model of the cloze task is the relationship between the length of the context and the probability of predicting (i.e., predictability of) the correct word.
 
 The regression line reflects a high value of predictability for contexts of length both less and more than five lexical units. However, the lack of correlation is worth emphasizing. We received the Pearson correlation coefficient score of 0.323 and Spearman correlation coefficient of 0.363.
 
 According to the results of our experiment, the closest probability distribution of the correct word of all the models was achieved with BERT trained on the literary corpus.
 
-In this case, there is practically no correlation: Pearson correlation score is 0.093521, Spearman correlation - 0.079094.
+In this case, there is practically no correlation: Pearson correlation score is \(0.09\), and Spearman correlation is \(0.08\).
 
 \begin{figure}
 \label{fig:context-accuracy-regression}
@@ -413,7 +410,7 @@ architectures showed low results on the lexical level.
 \includegraphics[width=0.4\textwidth]{figures/pdf/mean-accuracy-hist-lex.pdf}
 \end{figure}
 
-It is noticeable that BERT mean accuracy results are higher than the cloze task score. This can be explained by the fact that the model was trained on a large number of written texts and thus had a higher chance to guess the correct word. Following this assumption, an assumption can be made that respondents’ active vocabulary size is lower than the model’s vocabulary. Also, we can make a hypothesis that the process of word retrieval by humans and by the model is performed differently, as respondents do not always respond with the most probable answer.
+It is noticeable that BERT mean accuracy results are higher than the cloze task score. This can be explained by the fact that the model was trained on a large number of written texts and thus had a higher chance to guess the correct word. Following this assumption, it is possible to infer respondents' active vocabulary size is lower than the model's vocabulary. Also, we can make a hypothesis that the process of word retrieval by humans and by the model is performed differently, as respondents do not always respond with the most probable answer.
 
 \head{Absolute Accuracy}
 
@@ -428,7 +425,7 @@ In terms of the absolute number of predicted words, in the cloze task around 625
 
 \head{Model Consistency}
 
-Next, we compared models’ performances using an inclusion-exclusion principle to find a percentage of overlapping answers between different models. The result of this comparison is shown on the heat map below.
+Next, we compared models’ performances using an inclusion-exclusion principle to find the percentage of overlapping answers between different models. The result of this comparison is shown on the heat map below.
 
 The heat map reflects information on pairwise model comparison,
 however, we are mainly interested in how close the models are to the
@@ -466,7 +463,7 @@ To measure model predictions on the semantic level, the cosine similarity betwee
 
 \head{Kullback–Leibler Divergence}
 
-Due to the fact that all of our models are word-level, and in order to lower the casing variability we've combined all our vocabularies into one. For this compound vocabulary, we calculated the KL divergence of our models.
+Due to the fact that all of our models are word-level, and in order to lower the casing variability we've combined all our vocabularies into one. For this compound vocabulary, we calculated the KL divergence of our models.
 
 Table~\ref{tbl:kl-scores} shows the scores for three different models with
 bigram HMM trained on NCRL showing the best results. Unfortunately, this heat map does not show us changes in the language model (LM) distances context-lengthwise. Top 3 lengthwise LM distances from cloze are shown in Table~\ref{tbl:lm-distances}.
@@ -568,7 +565,7 @@ The performance of all models, except for LSTM, at the parts of speech level, ha
 
 \head{Absolute Accuracy}
 
-In absolute values, there is also a tendency in higher accuracy of BERT models, which can be interpreted as follows. BERT as a language model correctly predicts a part of the next word, but the words themselves, rather close to the context, have a low probability. Moreover, in many cases, they have almost a uniform distribution equal to 0.033.
+In absolute values, there is also a tendency in higher accuracy of BERT models, which can be interpreted as follows. BERT as a language model correctly predicts a part of the next word, but the words themselves, rather close to the context, have a low probability. Moreover, in many cases, they have almost a uniform distribution equal to 0.033.
 
 \begin{figure}
 \caption{Absolute accuracy histogram, part-of-speech level.}
@@ -639,7 +636,7 @@ Consistency at the object-verb-functional-modifier level  and Kolmogorov-Smirnov
 \includegraphics[width=0.4\textwidth]{figures/pdf/ks-omvf.pdf}
 \end{figure}
 
-The last two tests reflect a contradictory trend: LSTM shows a greater resemblance to the cloze task. Here it is necessary to comment on probabilistic distribution. Calculation of statistical tests based on probability distributions of the models makes the metrics far from objective, since the variation of the number of lexical units to consider significantly impacts the final output. Thus the results may highly differ for 25 and 30 lexical units. Moreover, artificial models allow us to reflect distributions for the large vocabulary, whereas the vocabulary of the cloze task is very limited and has many random outliers when the context is not constraining the next word on any level. It is disputable whether such cases should be eliminated from the vocabulary during research or not.                          
+The last two tests reflect a contradictory trend: LSTM shows a greater resemblance to the cloze task. Here it is necessary to comment on probabilistic distribution. Calculation of statistical tests based on probability distributions of the models makes the metrics far from objective, since the variation of the number of lexical units to consider significantly impacts the final output. Thus the results may highly differ for 25 and 30 lexical units. Moreover, artificial models allow us to reflect distributions for the large vocabulary, whereas the vocabulary of the cloze task is very limited and has many random outliers when the context is not constraining the next word on any level. It is disputable whether such cases should be eliminated from the vocabulary during research or not.
 
 \section{Conclusion}
 One of the important results of this study is the development of a certain set of methods (tools) for comparing the generative properties of language models. The starting point is an unrestricted set of contexts and the probabilistic distribution of words for each of them. This data can be obtained from all kinds of language models. Also, the re-normalized value of frequency from the corpus can be used as a language model for these purposes in further research. From our point of view, the most relevant metrics (from presented above) are Mean (Absolute) accuracy is prediction
@@ -654,7 +651,7 @@ We tested this methodology on the following models: Cloze-task-based model, hidd
 
 \end{document}
 
-% [az]https://colab.research.google.com/drive/1vZ4a2T-cCpE76VGvw4E-IyODy7XapWkc Добрый день, здесь выложил часть кода, отвечающую за расчет метрики для ЛСТМ,  не могли бы сверить со своими результатами?
+% [az]https://colab.research.google.com/drive/1vZ4a2T-cCpE76VGvw4E-IyODy7XapWkc Добрый день, здесь выложил часть кода, отвечающую за расчет метрики для ЛСТМ,  не могли бы сверить со своими результатами?
 % 
 % [ba]это довольно странное заключение: что мы считаем наиболее вероятным ответом? Что у нас является золотым стандартом вероятности ответа? Почему ответ BERT более вероятный, чем ответ людей?
 %
