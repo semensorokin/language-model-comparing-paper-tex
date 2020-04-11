@@ -119,7 +119,7 @@ An LSTM-based model for cloze-style machine comprehension is proposed in \cite{w
 
 Cloze task described in \cite{taylor:1953} is an experiment in which one or more words are removed from a sentence and the participants are asked to fill in the missing content. It is commonly carried out for assessing native speakers of a language, which is aimed to understand respondents’ comprehension of a language and their ability to predict missing portions of written texts \cite{laurinavichyute}. This experiment presumes that native speakers can understand context and vocabulary to identify the correct semantic field or part of speech of a missing word.
 
-We used the dataset with cloze task answers from \cite{laurinavichyute}. The dataset is based on 144 sentences randomly selected from the Russian National Corpus (RNC, ruscorpora.ru) - an online corpus of Russian texts with extensive search options. These sentences were slightly edited: the authors replaced rare infrequent words with more frequent ones and shortened the sentences when they exceeded the preset maximum length of 13 words. The stimuli sentences were subjected to the cloze task experiment. Respondents were asked to successively predict the next words for each context. An example of stimuli that were shown to the participants is presented in Table 1 with corresponding correct next words and calculated predictability scores.
+We used the dataset with cloze task answers from \cite{laurinavichyute}. The dataset is based on 144 sentences randomly selected from the National Corpus of the Russian Language (RNC, ruscorpora.ru) - an online corpus of Russian texts with extensive search options. These sentences were slightly edited: the authors replaced rare infrequent words with more frequent ones and shortened the sentences when they exceeded the preset maximum length of 13 words. The stimuli sentences were subjected to the cloze task experiment. Respondents were asked to successively predict the next words for each context. An example of stimuli that were shown to the participants is presented in Table 1 with corresponding correct next words and calculated predictability scores.
 
 Each context received from ~10 to ~100 responses, not all of which matched the correct word. The predictability of each next word was computed as the number of correctly predicted words divided by the total number of predicted words. The Laurinavichyute et al. article and the full list of sentences used in the study can be found. 
 
@@ -151,10 +151,10 @@ For experiments, we used BERT trained on the Russian Wikipedia corpus
 
 \subsection{Corpora}
 
-Russian news corpus \cite{runews} includes newspaper articles published in the 2000s: newspaper different types of articles.
-National corpus of Russian language \cite{natcorp} includes written texts from the middle of the 18th to the middle of the 20th century.
+The Russian News Corpus \cite{runews} includes newspaper articles published in the 2000s.
+The National Corpus of Russian Language \cite{natcorp} includes written texts from the middle of the 18th to the middle of the 20th century.
 
-Corpus characteristics are presented in Table 2.
+Some corpus statistics are presented in Table 2.
 
 \begin{table}
 \caption{Corpus statistics. RNC is the Russian News Corpus, and NCRL is the National Corpus of the Russian Language.
@@ -183,7 +183,7 @@ NCRL &
 \end{table}
 
 
-All of our models (except LSTM) were trained separately on 2 corpora and their combination. Thus we examine these models:
+All of our models (except LSTM) were trained separately on the two corpora, and on their combination. Thus we examine these models:
 
 \begin{itemize}
 	\item Hidden Markov Models
@@ -209,7 +209,7 @@ All of our models (except LSTM) were trained separately on 2 corpora and their c
 	\end{itemize}
 \end{itemize}
 
-Custom LSTM model was trained on the part of RNC, excluding the sentences chosen for stimuli, namely on modern written texts from the 1950s to the present day, real-life Russian oral speech recordings from the same period. Besides, it was trained on RNC and NCRL. Overall, the training corpus consisted of 577 million tokens. The model was tested on 1000 sentences from the OpenCorpora \cite{bocharov:2011} with an overall 1,9 million tokens from newspaper articles, Russian Wikipedia, texts from blogs, fiction, non-fiction, and legal documents. 
+The custom LSTM model was trained on a blinded NCRL (excluding the sentences chosen for stimuli) and the RNC. Overall, the training corpus consisted of 577 million tokens. The model was tested on 1000 sentences from the OpenCorpora project \cite{bocharov:2011} with 1,9 million tokens from newspaper articles, Russian Wikipedia, texts from blogs, fiction, non-fiction, and legal documents. 
 
 Among all, there is a Bigram HMM on NCRL + BERT fine-tuned on the NCRL model, which is by structure a combination of a bigram HMM and a BERT model. These models were joined based on the best performance of both models: probability distributions of HMM are used for contexts with length less than 6 tokens, and BERT is used for longer contexts. 
 
@@ -295,16 +295,20 @@ After lots of trial and error, it was decided to use semantic vectors for the co
 
 To compare semantic vectors for each context, firstly, we cleared all of the words so there would be no digits, meaningless letters and punctuation. Then, we have built a function, which:
 
-1)        Extracts first 10 words (we have decided that that is the maximum amount of words for each context that would have meaningful probabilities as all of the words after the first ten for each model have their probabilities tends to zero) for each of 1219 contexts;
+\begin{enumerate}[1)]
+
+\item        Extracts first 10 words (we have decided that that is the maximum amount of words for each context that would have meaningful probabilities as all of the words after the first ten for each model have their probabilities tends to zero) for each of 1219 contexts;
 
 % TODO arithmetic should be TeX-ified
-2)        Counts the quotient of the sum of words’ probabilities and each amount of words (for example, if two words were to have probabilities 0.5 and 0.1, we would count $((0.5+0.1)/2)$, which we call mean probabilities);
+\item        Computes the mean probability of remaining words; 
 
-3)        Counts the difference between the probabilities of the first and last word and then the difference between mean probabilities of the previous word and the next one;
+\item        Counts the difference between the probabilities of the first and last word and then the difference between mean probabilities of the previous word and the next one;
 
-4)        Decides what amount of words vectors to use for each context based on how different the first-last word difference and the mean probability difference is – if the latter is lesser than the former, the function checks the next difference, if not – the previous amount of words would be used for semantic comparison.
+\item        Decides what amount of words vectors to use for each context based on how different the first-last word difference and the mean probability difference is – if the latter is lesser than the former, the function checks the next difference, if not – the previous amount of words would be used for semantic comparison.
 
-After the decision on the number of words was made, with the help of gensim in Python a vector for each word was extracted.
+\end{enumerate}
+
+After the decision on the number of words was made, with the help of \texttt{gensim} in Python a vector for each word was extracted.
 
 Then, MiniBatchKmeans (a modified version of the K-means algorithm, that uses mini-batches to reduce computation time, while at the same time trying to optimize the same goal function \cite{bejar}) algorithm in sklearn was used to find “cluster centers”, or mean semantic vector for one model for each context. And at last, we computed cosine similarity (also with sklearn library) for each pair of semantic vectors for each pair of models.
 
