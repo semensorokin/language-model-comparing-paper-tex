@@ -4,6 +4,7 @@
 \usepackage{polyglossia}
 \usepackage{graphicx}
 \usepackage{hyperref}
+\usepackage{enumerate}
 
 
 \setmainfont{FreeSerif}
@@ -296,15 +297,10 @@ After lots of trial and error, it was decided to use semantic vectors for the co
 To compare semantic vectors for each context, firstly, we cleared all of the words so there would be no digits, meaningless letters and punctuation. Then, we have built a function, which:
 
 \begin{enumerate}[1)]
-
-\item        Extracts first 10 words (we have decided that that is the maximum amount of words for each context that would have meaningful probabilities as all of the words after the first ten for each model have their probabilities tends to zero) for each of 1219 contexts;
-
-\item        Computes the mean probability of remaining words; 
-
-\item        Counts the difference between the probabilities of the first and last word and then the difference between mean probabilities of the previous word and the next one;
-
-\item        Decides what amount of words vectors to use for each context based on how different the first-last word difference and the mean probability difference is – if the latter is lesser than the former, the function checks the next difference, if not – the previous amount of words would be used for semantic comparison.
-
+\item Extracts first 10 words (we have decided that that is the maximum amount of words for each context that would have meaningful probabilities as all of the words after the first ten for each model have their probabilities tends to zero) for each of 1219 contexts;
+\item Computes the mean probability of remaining words; 
+\item Counts the difference between the probabilities of the first and last word and then the difference between mean probabilities of the previous word and the next one;
+\item Decides what amount of words vectors to use for each context based on how different the first-last word difference and the mean probability difference is – if the latter is lesser than the former, the function checks the next difference, if not – the previous amount of words would be used for semantic comparison.
 \end{enumerate}
 
 After the decision on the number of words was made, with the help of \texttt{gensim} in Python a vector for each word was extracted.
